@@ -17,7 +17,7 @@ export default class Scanner extends Component {
                 patchSize: "medium",
                 halfSample: true
             },
-            numOfWorkers: 2,
+            numOfWorkers: 4,
             decoder: {
                 readers : ["upc_reader"]
             },
@@ -28,6 +28,15 @@ export default class Scanner extends Component {
             }
             Quagga.start();
         });
+        Quagga.onDetected(this.detected);
+    }
+
+    detected(result) {
+        console.log(result);
+    }
+
+    componentWillUnmount() {
+        Quagga.offDetected(this.detected);
     }
 
     render(){
