@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Quagga from 'quagga';
-import "./components.css"
 
 export default class Scanner extends Component {
     componentDidMount() {
@@ -19,7 +18,8 @@ export default class Scanner extends Component {
             },
             numOfWorkers: 4,
             decoder: {
-                readers : ["upc_reader"]
+                readers : ["upc_reader"],
+                multiple: false
             },
             locate: true
         }, function(err) {
@@ -33,6 +33,7 @@ export default class Scanner extends Component {
 
     detected(result) {
         console.log(result);
+        Quagga.stop();
     }
 
     componentWillUnmount() {
