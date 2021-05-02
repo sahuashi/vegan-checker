@@ -38,6 +38,7 @@ export default class Scanner extends Component {
 
     componentWillUnmount() {
         Quagga.offDetected(this.detected);
+        Quagga.stop();
     }
 
     render(){
