@@ -1,8 +1,12 @@
 import './App.css';
+import Scanner from './components/scanner.js'
 
 function App() {
   return (
-    <h1>hiiiii</h1>
+    <div>
+      <h1>hiiiii</h1>
+      <Scanner/>
+    </div>
   );
 }
 
