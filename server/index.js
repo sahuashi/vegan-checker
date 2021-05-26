@@ -21,49 +21,40 @@ const key = process.env.APP_KEY;
 
 app.post("/", (req, res) => {
     const upc = '028400038546';
-    var result = null;
-    var food = null;
+    var name = null;
     //const upc = req.body;
     got.get(`https://api.edamam.com/api/food-database/v2/parser?upc=${upc}&app_id=${id}&app_key=${key}`, {
             responseType: 'json'
         })
         .then(response => {
-            food = {
+            return {
                 name: response.body.hints[0].food.label,
                 id: response.body.hints[0].food.foodId
             }
-            result = getNutrition(food);
+        })
+        .then(food => {
+            name = food.name;
+            return got.post(`https://api.edamam.com/api/food-database/v2/nutrients?app_id=${id}&app_key=${key}`, {
+                json: {
+                    "ingredients": [{
+                        "quantity": 1,
+                        "measureURI": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
+                        "foodId": food.id
+                    }]
+                },
+                responseType: 'json'
+            })
+        })
+        .then(response => {
+            const isVegan = response.body.healthLabels.includes("VEGAN")
+            var result = isVegan? `${name} is VEGAN` : `${name} is NOT VEGAN`;
+            console.log(result);
             res.send(result);
         })
         .catch(err => {
             res.send(err);
         });
 })
-
-const getNutrition = (food) => {
-    got.post(`https://api.edamam.com/api/food-database/v2/nutrients?app_id=${id}&app_key=${key}`, {
-            json: {
-                "ingredients": [{
-                    "quantity": 1,
-                    "measureURI": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
-                    "foodId": food.id
-                }]
-            },
-            responseType: 'json'
-        })
-        .then(res => {
-            console.log(res.body);
-            return determineVegan(food.name, res.body.healthLabels);
-        })
-        .catch(err => {
-            console.log('Error: ', err.message);
-        });
-}
-
-const determineVegan = (name, labels) => {
-    const isVegan = labels.includes("VEGAN");
-    return isVegan ? (name + ": VEGAN") : (name + ": NOT VEGAN");
-}
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}!`)
