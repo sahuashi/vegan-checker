@@ -4,7 +4,6 @@ import Quagga from 'quagga';
 export default class Scanner extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props)
         this.detected = this.detected.bind(this);
     }
 
@@ -13,19 +12,13 @@ export default class Scanner extends Component {
             inputStream: {
                 type : "LiveStream",
                 constraints: {
-                    width: 640,
-                    height: 480,
-                    facing: "environment"
+                    width: '800',
+                    height: '500'
                 }
             },
-            locator: {
-                patchSize: "medium",
-                halfSample: true
-            },
-            numOfWorkers: 4,
+            numberOfWorkers: navigator.hardwareConcurrency,
             decoder: {
-                readers : ["upc_reader"],
-                multiple: false
+                readers : ["upc_reader", "upc_e_reader", "ean_reader", "ean_8_reader"]
             },
             locate: true
         }, function(err) {
@@ -38,15 +31,14 @@ export default class Scanner extends Component {
     }
 
     detected(result) {
-        const code = result.codeResult.code;
-        this.props.setScanner({scanning: this.props.scanner.scanning, result: code});
         Quagga.stop();
-        this.props.setScanner({scanning: false, result: this.props.scanner.result});
+        Quagga.offDetected(this.detected);
+        this.props.setScanner({scanning: false, barcode: result.codeResult.code});
     }
 
     componentWillUnmount() {
         Quagga.stop();
-        console.log(this.props);
+        Quagga.offDetected(this.detected);
     }
 
     render(){
