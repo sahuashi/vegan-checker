@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Block } from 'react-bulma-components'
 import axios from 'axios';
 
 export default class Product extends Component {
@@ -32,8 +33,8 @@ export default class Product extends Component {
     return (
       <div>
         {this.state.image ? 
-        <div><img src={this.state.image} alt="Product"/><h1>{result}</h1></div> : 
-        <h1>This product was not found in the food database. Please try again.</h1>}
+        <div><img src={this.state.image} alt="Product"/><Block>{result}</Block></div> : 
+        <Block>This product was not found in the food database. Please try again.</Block>}
       </div>
     );
   }
