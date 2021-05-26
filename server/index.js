@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import got from 'got';
 
 dotenv.config();
@@ -8,19 +9,34 @@ const app = express();
 
 const port = process.env.PORT || 5000;
 
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
+
+app.use(express.json());
+
 const id = process.env.APP_ID;
 const key = process.env.APP_KEY;
 
-app.get("/", (req, res) => {
-    got.get(`https://api.edamam.com/api/food-database/v2/parser?upc=012000001291&app_id=${id}&app_key=${key}`, {
+app.post("/", (req, res) => {
+    const upc = '028400038546';
+    var result = null;
+    var food = null;
+    //const upc = req.body;
+    got.get(`https://api.edamam.com/api/food-database/v2/parser?upc=${upc}&app_id=${id}&app_key=${key}`, {
             responseType: 'json'
         })
-        .then(res => {
-            console.log(JSON.stringify(res.body));
-            getNutrition(res.body.hints[0].food.foodId);
+        .then(response => {
+            food = {
+                name: response.body.hints[0].food.label,
+                id: response.body.hints[0].food.foodId
+            }
+            result = getNutrition(food);
+            res.send(result);
         })
         .catch(err => {
-            console.log('Error: ', err.message);
+            res.send(err);
         });
 })
 
@@ -30,17 +46,23 @@ const getNutrition = (food) => {
                 "ingredients": [{
                     "quantity": 1,
                     "measureURI": "http://www.edamam.com/ontologies/edamam.owl#Measure_serving",
-                    "foodId": food
+                    "foodId": food.id
                 }]
             },
             responseType: 'json'
         })
         .then(res => {
             console.log(res.body);
+            return determineVegan(food.name, res.body.healthLabels);
         })
         .catch(err => {
             console.log('Error: ', err.message);
         });
+}
+
+const determineVegan = (name, labels) => {
+    const isVegan = labels.includes("VEGAN");
+    return isVegan ? (name + ": VEGAN") : (name + ": NOT VEGAN");
 }
 
 app.listen(port, () => {

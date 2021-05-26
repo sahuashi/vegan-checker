@@ -18,7 +18,7 @@ export default class Scanner extends Component {
             },
             numberOfWorkers: navigator.hardwareConcurrency,
             decoder: {
-                readers : ["upc_reader", "upc_e_reader", "ean_reader", "ean_8_reader"]
+                readers : ["upc_reader"]
             },
             locate: true
         }, function(err) {
@@ -31,15 +31,10 @@ export default class Scanner extends Component {
     }
 
     detected(result) {
-        this.stopQuagga();
         this.props.setScanner({scanning: false, barcode: result.codeResult.code});
     }
 
     componentWillUnmount() {
-        this.stopQuagga();
-    }
-
-    stopQuagga(){
         Quagga.stop();
         Quagga.offDetected(this.detected);
     }
