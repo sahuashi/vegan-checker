@@ -52,8 +52,7 @@ app.get("/", (req, res) => {
             res.send(result);
         })
         .catch(err => {
-            console.log(err);
-            res.send(err);
+            res.send("Product not found");
         });
 })
 
