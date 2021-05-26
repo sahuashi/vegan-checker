@@ -5,7 +5,9 @@ export default class Product extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      result: ''
+      name: '',
+      isVegan: '',
+      image: ''
     }
   }
 
@@ -16,18 +18,19 @@ export default class Product extends Component {
       }
     })
       .then(res => {
-        console.log(res.data);
-        this.setState({
-          result: res.data
-        })
+        if(res.data !== "Product not found."){
+          this.setState(res.data);
+          console.log(this.state);
+        }
       })
       .catch(err => console.log(err))
   }
 
   render() {
+    var result = this.state.isVegan? `${this.state.name} is vegan` : `${this.state.name} is not vegan`;
     return (
       <div>
-        {this.state.result ? <h1>{this.state.result}</h1> : null}
+        {this.state.image ? <h1>{result}</h1> : <h1>This product was not found in the food database. Please try again.</h1>}
       </div>
     );
   }

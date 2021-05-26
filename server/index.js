@@ -23,17 +23,20 @@ app.get("/", (req, res) => {
     const upc = req.query.upc;
     console.log(upc);
     var name = null;
+    var image = null;
     got.get(`https://api.edamam.com/api/food-database/v2/parser?upc=${upc}&app_id=${id}&app_key=${key}`, {
             responseType: 'json'
         })
         .then(response => {
             return {
                 name: response.body.hints[0].food.label,
-                id: response.body.hints[0].food.foodId
+                id: response.body.hints[0].food.foodId,
+                image: response.body.hints[0].food.image
             }
         })
         .then(food => {
             name = food.name;
+            image = food.image;
             return got.post(`https://api.edamam.com/api/food-database/v2/nutrients?app_id=${id}&app_key=${key}`, {
                 json: {
                     "ingredients": [{
@@ -46,13 +49,16 @@ app.get("/", (req, res) => {
             })
         })
         .then(response => {
-            const isVegan = response.body.healthLabels.includes("VEGAN")
-            var result = isVegan? `${name} is VEGAN` : `${name} is NOT VEGAN`;
-            console.log(result);
-            res.send(result);
+            const food = {
+                name: name,
+                isVegan: response.body.healthLabels.includes("VEGAN"),
+                image: image
+            }
+            console.log(food);
+            res.send(food);
         })
         .catch(err => {
-            res.send("Product not found");
+            res.send("Product not found.")
         });
 })
 
