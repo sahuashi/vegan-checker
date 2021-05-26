@@ -31,12 +31,15 @@ export default class Scanner extends Component {
     }
 
     detected(result) {
-        Quagga.stop();
-        Quagga.offDetected(this.detected);
+        this.stopQuagga();
         this.props.setScanner({scanning: false, barcode: result.codeResult.code});
     }
 
     componentWillUnmount() {
+        this.stopQuagga();
+    }
+
+    stopQuagga(){
         Quagga.stop();
         Quagga.offDetected(this.detected);
     }
