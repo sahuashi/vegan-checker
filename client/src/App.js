@@ -11,7 +11,10 @@ function App() {
 
   useEffect(() => {
     if (scanner.barcode) {
-      axios.post("http://localhost:5000/", scanner.barcode)
+      axios.get("http://localhost:5000/", {
+        params: {
+          upc: scanner.barcode
+        }})
         .then((res) => console.log(res))
         .catch((err) => console.log(err))
     }

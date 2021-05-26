@@ -19,10 +19,10 @@ app.use(express.json());
 const id = process.env.APP_ID;
 const key = process.env.APP_KEY;
 
-app.post("/", (req, res) => {
-    const upc = '028400038546';
+app.get("/", (req, res) => {
+    const upc = req.query.upc;
+    console.log(upc);
     var name = null;
-    //const upc = req.body;
     got.get(`https://api.edamam.com/api/food-database/v2/parser?upc=${upc}&app_id=${id}&app_key=${key}`, {
             responseType: 'json'
         })
@@ -52,6 +52,7 @@ app.post("/", (req, res) => {
             res.send(result);
         })
         .catch(err => {
+            console.log(err);
             res.send(err);
         });
 })
