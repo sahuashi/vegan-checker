@@ -12,6 +12,7 @@ export default class Product extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.barcode);
     axios.get("http://localhost:5000/", {
       params: {
         upc: this.props.barcode
@@ -30,7 +31,9 @@ export default class Product extends Component {
     var result = this.state.isVegan? `${this.state.name} is vegan` : `${this.state.name} is not vegan`;
     return (
       <div>
-        {this.state.image ? <h1>{result}</h1> : <h1>This product was not found in the food database. Please try again.</h1>}
+        {this.state.image ? 
+        <div><img src={this.state.image} alt="Product"/><h1>{result}</h1></div> : 
+        <h1>This product was not found in the food database. Please try again.</h1>}
       </div>
     );
   }

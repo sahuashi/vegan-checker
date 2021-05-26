@@ -9,9 +9,10 @@ function App() {
   const [scanner, setScanner] = useState({scanning: false, barcode: null});
 
   const toggleScanner = () => {
+    const barcode = scanner.scanning? scanner.barcode : null;
     setScanner({
       scanning: !scanner.scanning,
-      barcode: scanner.barcode
+      barcode: barcode
     })
   }
   
