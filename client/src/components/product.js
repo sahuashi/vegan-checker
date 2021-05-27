@@ -3,6 +3,7 @@ import { Box, Block, Heading, Tag} from 'react-bulma-components'
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBarcode } from '@fortawesome/free-solid-svg-icons'
+import ReactLoading from 'react-loading';
 import Search from './img/nature-plant.svg'
 
 export default class Product extends Component {
@@ -11,7 +12,8 @@ export default class Product extends Component {
     this.state = {
       name: '',
       isVegan: '',
-      image: ''
+      image: '',
+      loading: true
     }
   }
 
@@ -24,7 +26,12 @@ export default class Product extends Component {
       })
       .then(res => {
         if (res.data !== "Product not found.") {
-          this.setState(res.data);
+          this.setState({
+            name: res.data.name,
+            isVegan: res.data.isVegan,
+            image: res.data.image,
+            loading: false
+          });
           console.log(this.state);
         }
       })
@@ -39,7 +46,8 @@ export default class Product extends Component {
       <Box id="result">
         <Heading subtitle weight="light" size="6" mb="3" className="blue">
           <FontAwesomeIcon icon={faBarcode} size="lg" color="darkolivegreen"/> UPC: {this.props.barcode}
-          </Heading>
+        </Heading>
+        {this.state.loading? <ReactLoading type="bubbles" color="darkseagreen" height="auto" width="auto"/> : <div>
         {this.state.image ? 
           <div><Heading subtitle weight="light" size="5" mb="3" className="blue">{this.state.name}</Heading>
           <img src={this.state.image} alt="Product" id="product"/>
@@ -47,7 +55,7 @@ export default class Product extends Component {
           <div>
             <img src={Search} alt="404 Search" id="search"/>
             <Block textWeight="light" mt="0" className="blue">This product was not found in the food database.
-            <br/>Please try again or scan a different product.</Block></div>}
+            <br/>Please try again or scan a different product.</Block></div>}</div>}
       </Box>
     );
   }
