@@ -34,6 +34,12 @@ export default class Product extends Component {
           });
           console.log(this.state);
         }
+        else{
+          this.setState({
+            name: "not found",
+            loading: false
+          });
+        }
       })
       .catch(err => console.log(err))
   }
@@ -48,9 +54,9 @@ export default class Product extends Component {
           <FontAwesomeIcon icon={faBarcode} size="lg" color="darkolivegreen"/> UPC: {this.props.barcode}
         </Heading>
         {this.state.loading? <ReactLoading type="bubbles" color="darkseagreen" height="auto" width="auto"/> : <div>
-        {this.state.image ? 
+        {this.state.name !== "not found" ? 
           <div><Heading subtitle weight="light" size="5" mb="3" className="blue">{this.state.name}</Heading>
-          <img src={this.state.image} alt="Product" id="product"/>
+          {this.state.image? <img src={this.state.image} alt="Product" id="product"/> : <img src={Search} alt="404 thumbnail" id="search"/>}
           <Block py="1">{result}</Block></div> : 
           <div>
             <img src={Search} alt="404 Search" id="search"/>
