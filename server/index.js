@@ -49,9 +49,12 @@ app.get("/", (req, res) => {
             })
         })
         .then(response => {
+            var ingredientsAreVegan = checkIngredients(response.body.ingredients[0].parsed[0].foodContentsLabel);
+            //const isVegan = response.body.healthLabels.includes("VEGAN") || checkHealthLabels(response.body.healthLabels) || checkIngredients();
+            const isVegan = response.body.healthLabels.includes("VEGAN") || checkHealthLabels(response.body.healthLabels);
             const food = {
                 name: name,
-                isVegan: response.body.healthLabels.includes("VEGAN"),
+                isVegan: isVegan,
                 image: image
             }
             console.log(food);
@@ -61,6 +64,26 @@ app.get("/", (req, res) => {
             res.send("Product not found.")
         });
 })
+
+const checkHealthLabels = (labels) => {
+    const veganLabels = [
+      "VEGETARIAN",
+      "SHELLFISH_FREE",
+      "RED_MEAT_FREE",
+      "PORK_FREE",
+      "FISH_FREE",
+      "EGG_FREE",
+      "DAIRY_FREE",
+      "CRUSTACEAN_FREE",
+    ];
+
+    return veganLabels.every(label => labels.includes(label));
+}
+
+const checkIngredients = (ingredients) => {
+    // array of 15 (more?) most common non-vegan ingredients
+    // make sure none of them are present in ingredients
+}
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}!`)
