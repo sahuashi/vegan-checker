@@ -42,7 +42,7 @@ div {
 }
 
 .blue {
-  color: #546A76
+  color: #01384F
 }
 
 #icon {
@@ -51,4 +51,18 @@ div {
 
 #search {
   width: 35%
+}
+
+#vector {
+  width: 40%;
+  left: 50%;
+  top: 75%;
+}
+
+#home {
+  width: fit-content;
+  position: fixed;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, -50%);
 }

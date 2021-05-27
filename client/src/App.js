@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCamera, faSeedling } from '@fortawesome/free-solid-svg-icons'
 import Scanner from './components/scanner'
 import Product from './components/product'
+import About from './components/img/chores-watering-plants.svg'
 import './App.css';
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
       <FontAwesomeIcon icon={faCamera} color="DarkSeaGreen" id="icon" /></Button>
       {scanner.scanning && <Scanner scanner={scanner} setScanner={setScanner}/>}
       {scanner.barcode && <Product barcode={scanner.barcode}/>}
+      {!scanner.scanning && !scanner.barcode && <div id="home">
+      <Heading className="blue" mt="5" mb="0" size="5" weight="light">Check if a product is vegan by clicking the scan button and scanning the product's barcode.</Heading>
+      <img src={About} alt="background" id="vector"/></div>}
     </Container>
   );
 }
