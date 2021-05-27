@@ -19,9 +19,10 @@ function App() {
   }
   
   return (
-    <Container style={{height: '100vh', maxWidth: 'none', overflow: 'hidden'}}id="bg">
-      <Heading pt="5" weight="light"><FontAwesomeIcon icon={faSeedling} color="DarkSeaGreen"/> Vegan Checker</Heading>
-      <Button mb="4" rounded onClick={toggleScanner}>{scanner.scanning? "Stop scanning" : "Scan"} <FontAwesomeIcon icon={faCamera} color="olivedrab" style={{marginLeft: '0.5em'}}/></Button>
+    <Container id="body">
+      <Heading pt="5" weight="light" className="blue"><FontAwesomeIcon icon={faSeedling} color="DarkSeaGreen"/> Vegan Checker</Heading>
+      <Button mb="4" rounded onClick={toggleScanner} className="blue">{scanner.scanning? "Stop scanning" : "Scan"} 
+      <FontAwesomeIcon icon={faCamera} color="DarkSeaGreen" id="icon" /></Button>
       {scanner.scanning && <Scanner scanner={scanner} setScanner={setScanner}/>}
       {scanner.barcode && <Product barcode={scanner.barcode}/>}
     </Container>
