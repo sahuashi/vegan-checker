@@ -5,3 +5,33 @@ h1 {
 div {
   text-align: center;
 }
+
+#result {
+  background-image: url('./components/img/blob.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 800px 800px;
+  background: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#product {
+  width: 15%
+}
+
+#plant {
+  width: 30%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#bg {
+  background: url('./components/img/wave.svg');
+  background-repeat: no-repeat;
+  background-position: bottom;
+}

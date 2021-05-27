@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { Block } from 'react-bulma-components'
+import { Box, Block, Heading, Tag} from 'react-bulma-components'
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBarcode } from '@fortawesome/free-solid-svg-icons'
 
 export default class Product extends Component {
   constructor(props) {
@@ -15,12 +17,12 @@ export default class Product extends Component {
   componentDidMount() {
     console.log(this.props.barcode);
     axios.get("http://localhost:5000/", {
-      params: {
-        upc: this.props.barcode
-      }
-    })
+        params: {
+          upc: this.props.barcode
+        }
+      })
       .then(res => {
-        if(res.data !== "Product not found."){
+        if (res.data !== "Product not found.") {
           this.setState(res.data);
           console.log(this.state);
         }
@@ -29,13 +31,20 @@ export default class Product extends Component {
   }
 
   render() {
-    var result = this.state.isVegan? `${this.state.name} is vegan` : `${this.state.name} is not vegan`;
+    var result = this.state.isVegan? 
+    <Tag rounded color="success" colorVariant="light" size="medium">Vegan</Tag> : 
+    <Tag rounded color="danger" colorVariant="light" size="medium">Not Vegan</Tag> 
     return (
-      <div>
+      <Box id="result" style={{width: 'fit-content'}}>
+        <Heading subtitle weight="light" size="6" mb="3">
+          <FontAwesomeIcon icon={faBarcode} size="lg" color="darkolivegreen"/> UPC: {this.props.barcode}
+          </Heading>
         {this.state.image ? 
-        <div><img src={this.state.image} alt="Product"/><Block>{result}</Block></div> : 
-        <Block>This product was not found in the food database. Please try again.</Block>}
-      </div>
+          <div><Heading subtitle weight="light" size="5" mb="3">{this.state.name}</Heading>
+          <img src={this.state.image} alt="Product" id="product"/>
+          <Block py="1">{result}</Block></div> : 
+          <Block>This product was not found in the food database. Please try again.</Block>}
+      </Box>
     );
   }
 }
