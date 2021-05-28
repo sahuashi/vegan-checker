@@ -19,7 +19,7 @@ export default class Product extends Component {
 
   componentDidMount() {
     console.log(this.props.barcode);
-    axios.get("/lookup/", {
+    axios.get("http://localhost:5000/lookup/", {
         params: {
           upc: this.props.barcode
         }
