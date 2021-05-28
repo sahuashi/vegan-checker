@@ -18,8 +18,7 @@ export default class Product extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.barcode);
-    axios.get("http://localhost:5000/lookup/", {
+    axios.get("/lookup/", {
         params: {
           upc: this.props.barcode
         }
@@ -32,7 +31,6 @@ export default class Product extends Component {
             image: res.data.image,
             loading: false
           });
-          console.log(this.state);
         }
         else{
           this.setState({

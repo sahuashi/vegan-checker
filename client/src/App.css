@@ -61,8 +61,8 @@ div {
 
 #home {
   width: fit-content;
-  position: fixed;
+  position: relative;
   left: 50%;
-  top: 55%;
+  top: 30%;
   transform: translate(-50%, -50%);
 }
