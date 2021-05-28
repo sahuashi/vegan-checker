@@ -20,7 +20,7 @@ app.use(express.json());
 const id = process.env.APP_ID;
 const key = process.env.APP_KEY;
 
-app.get("/", (req, res) => {
+app.get("/lookup/", (req, res) => {
     const upc = req.query.upc;
     console.log(upc);
     var name = null;
