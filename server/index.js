@@ -49,8 +49,8 @@ app.get("/", (req, res) => {
             })
         })
         .then(response => {
-            var ingredientsAreVegan = checkIngredients(response.body.ingredients[0].parsed[0].foodContentsLabel);
-            //const isVegan = response.body.healthLabels.includes("VEGAN") || checkHealthLabels(response.body.healthLabels) || checkIngredients();
+            //console.log(response.body.healthLabels);
+            //console.log(response.body.ingredients[0].parsed[0].foodContentsLabel);
             const isVegan = response.body.healthLabels.includes("VEGAN") || checkHealthLabels(response.body.healthLabels);
             const food = {
                 name: name,
@@ -75,14 +75,10 @@ const checkHealthLabels = (labels) => {
       "EGG_FREE",
       "DAIRY_FREE",
       "CRUSTACEAN_FREE",
+      "MOLLUSK_FREE"
     ];
 
     return veganLabels.every(label => labels.includes(label));
-}
-
-const checkIngredients = (ingredients) => {
-    // array of 15 (more?) most common non-vegan ingredients
-    // make sure none of them are present in ingredients
 }
 
 app.listen(port, () => {
