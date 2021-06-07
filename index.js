@@ -1,3 +1,4 @@
+import redirect from 'heroku-ssl-redirect';
 import express from 'express';
 import * as path from 'path';
 import cors from 'cors';
@@ -6,6 +7,9 @@ import router from './routes.js';
 const app = express();
 
 const port = process.env.PORT || 5000;
+
+// redirect from http to https
+app.use(redirect.default());
 
 app.use(cors({
     origin: 'http://localhost:3000',
