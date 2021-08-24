@@ -46,9 +46,30 @@ export default class Product extends Component {
   }
 
   render() {
-    const result = this.state.isVegan
+    const veganResult = this.state.isVegan
       ? <Tag rounded color="success" colorVariant="light" size="medium">Vegan</Tag>
       : <Tag rounded color="danger" colorVariant="light" size="medium">Not Vegan</Tag>;
+    const imageResult = this.state.image
+      ? <img src={this.state.image} alt="Product" id="product" />
+      : <img src={Search} alt="404 thumbnail" id="search" />;
+    const searchResult = this.state.name !== 'not found'
+      ? (
+        <div>
+          <Heading subtitle weight="light" size="5" mb="3" className="blue">{this.state.name}</Heading>
+          {imageResult}
+          <Block py="1">{veganResult}</Block>
+        </div>
+      )
+      : (
+        <div>
+          <img src={Search} alt="404 Search" id="search" />
+          <Block textWeight="light" mt="0" className="blue">
+            This product was not found in the food database.
+            <br />
+            Please try again or scan a different product.
+          </Block>
+        </div>
+      );
     return (
       <Box id="result">
         <Heading subtitle weight="light" size="6" mb="3" className="blue">
@@ -58,26 +79,7 @@ export default class Product extends Component {
           {' '}
           {this.props.barcode}
         </Heading>
-        {this.state.loading ? <ReactLoading type="bubbles" color="darkseagreen" height="auto" width="auto" /> : (
-          <div>
-            {this.state.name !== 'not found' ? (
-              <div>
-                <Heading subtitle weight="light" size="5" mb="3" className="blue">{this.state.name}</Heading>
-                {this.state.image ? <img src={this.state.image} alt="Product" id="product" /> : <img src={Search} alt="404 thumbnail" id="search" />}
-                <Block py="1">{result}</Block>
-              </div>
-            ) : (
-              <div>
-                <img src={Search} alt="404 Search" id="search" />
-                <Block textWeight="light" mt="0" className="blue">
-                  This product was not found in the food database.
-                  <br />
-                  Please try again or scan a different product.
-                </Block>
-              </div>
-            )}
-          </div>
-        )}
+        {this.state.loading ? <ReactLoading type="bubbles" color="darkseagreen" height="auto" width="auto" /> : <div>{searchResult}</div>}
       </Box>
     );
   }
