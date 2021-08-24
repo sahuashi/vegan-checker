@@ -1,11 +1,11 @@
 import 'bulma/css/bulma.min.css';
 import React, { useState } from 'react';
 import { Button, Container, Heading } from 'react-bulma-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCamera, faSeedling } from '@fortawesome/free-solid-svg-icons'
-import Scanner from './components/scanner'
-import Product from './components/product'
-import About from './components/img/chores-watering-plants.svg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCamera, faSeedling } from '@fortawesome/free-solid-svg-icons';
+import Scanner from './components/Scanner';
+import Product from './components/Product';
+import PlantsVector from './assets/chores-watering-plants.svg';
 import './App.css';
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
       {scanner.barcode && <Product barcode={scanner.barcode}/>}
       {!scanner.scanning && !scanner.barcode && <div id="home">
       <Heading className="blue" mt="5" mb="0" size="5" weight="light">Check if a product is vegan by clicking the scan button and scanning the product's barcode.</Heading>
-      <img src={About} alt="background" id="vector"/></div>}
+      <img src={PlantsVector} alt="background" id="vector"/></div>}
     </Container>
   );
 }

@@ -7,7 +7,7 @@ div {
 }
 
 #result {
-  background-image: url('./components/img/blob.svg');
+  background-image: url('./assets/blob.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 800px 800px;
@@ -33,7 +33,7 @@ div {
 }
 
 #body {
-  background: url('./components/img/wave.svg');
+  background: url('./assets/wave.svg');
   background-repeat: no-repeat;
   background-position: bottom;
   height: 100vh;

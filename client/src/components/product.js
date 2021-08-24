@@ -4,7 +4,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBarcode } from '@fortawesome/free-solid-svg-icons'
 import ReactLoading from 'react-loading';
-import Search from './img/nature-plant.svg'
+import Search from '../assets/nature-plant.svg';
 
 export default class Product extends Component {
   constructor(props) {
