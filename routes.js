@@ -1,7 +1,8 @@
 import express from 'express';
-import { lookup } from './controller.js'
 
-var router = express.Router()
+import lookup from './controller.js';
+
+const router = express.Router();
 
 router.get('/lookup/', lookup);
 
