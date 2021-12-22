@@ -10,13 +10,15 @@ A web application that allows users to scan a food product's barcode and check i
 * [Bulma](https://bulma.io) - UI framework
 
 ## Demo
-![demo gif](client/public/example.png)
 This application is currently deployed on Heroku at https://veganchecker.herokuapp.com.
+
+![demo image](client/public/example.png)
 
 ## License
 Released under the MIT License. See `LICENSE` for more information.
 
-## Acknowledgments
-* [Illustration](https://delesign.com/free-designs/graphics)
+## Acknowledgements
+* [Illustration SVG](https://delesign.com/free-designs/graphics)
+* [Wave SVG](https://getwaves.io)
 * [react-bulma-components](https://react-bulma.dev/en)
 * [react-loading](https://www.npmjs.com/package/react-loading)
